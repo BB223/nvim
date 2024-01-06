@@ -1,1 +1,1 @@
-require("bzell")
+require('config')
