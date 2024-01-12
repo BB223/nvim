@@ -79,10 +79,17 @@ return {
                 ensure_installed = {},
                 handlers = {
                     lsp_zero.default_setup,
+
+                    -- lua_ls configuration
                     lua_ls = function()
                         -- (Optional) Configure lua language server for neovim
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         require('lspconfig').lua_ls.setup(lua_opts)
+                    end,
+
+                    -- clangd configuration
+                    clangd = function()
+                        require('lspconfig').clangd.setup({})
                     end,
                 }
 
