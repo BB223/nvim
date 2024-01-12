@@ -1,7 +1,8 @@
 return {
-    "tpope/vim-fugitive",
-    lazy = false,
+    'tpope/vim-fugitive',
+    event = 'BufWinEnter',
     keys = {
-        vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+        {"<leader>gs", vim.cmd.Git},
     }
 }
+

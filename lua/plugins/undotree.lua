@@ -1,7 +1,7 @@
 return {
-    "mbbill/undotree",
-    lazy = false,
+    'mbbill/undotree',
+    event = 'VeryLazy',
     keys = {
-        vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-    }
+        {"<leader>u", vim.cmd.UndotreeToggle},
+    },
 }
