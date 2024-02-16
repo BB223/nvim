@@ -17,14 +17,14 @@ require('config.autocmds')
 
 local opts = {
     defaults = {
-        lazy = true,
+        lazy = false,
     },
     install = {
         colorsheme = { 'rose-pine' }
     },
     change_detection = {
-        notify = true,
+        notify = false,
     },
 }
 
-require("lazy").setup('plugins')
+require("lazy").setup('plugins', opts)

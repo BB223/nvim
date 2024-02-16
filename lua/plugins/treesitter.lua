@@ -22,7 +22,7 @@ return {
             additional_vim_regex_highlighting = false,
         }
     },
-    config = function(_,opts)
+    config = function(_, opts)
         if type(opts.ensure_installed) == "table" then
             ---@type table<string, boolean>
             local added = {}
