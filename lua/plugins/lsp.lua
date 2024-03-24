@@ -48,8 +48,8 @@ return {
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
-                }, {
                     { name = 'buffer' },
+                    { name = 'path' },
                 }),
             })
 
@@ -108,7 +108,6 @@ return {
                         },
                     }
                 end,
-                --[[
                 ["lua_ls"] = function ()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
@@ -121,7 +120,6 @@ return {
                         }
                     }
                 end,
-                --]]
             }
         },
     },
