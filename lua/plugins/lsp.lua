@@ -8,10 +8,6 @@ return {
                 opts = {}
             },
             --]]
-            {
-                "j-hui/fidget.nvim",
-                opts = {},
-            },
 
             "mason.nvim",
             "mason-lspconfig.nvim",
@@ -24,6 +20,8 @@ return {
 
             'L3MON4D3/LuaSnip',
             'saadparwaiz1/cmp_luasnip',
+
+            "j-hui/fidget.nvim",
         },
         config = function()
             local cmp = require('cmp')
@@ -54,7 +52,7 @@ return {
             })
 
             vim.diagnostic.config({
-                update_in_insert = true,
+                -- update_in_insert = true,
                 float = {
                     focusable = false,
                     style = "minimal",
@@ -87,7 +85,11 @@ return {
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
-                        capabilities = require("cmp_nvim_lsp").default_capabilities()
+                        capabilities = vim.tbl_deep_extend(
+                        "force",
+                        {},
+                        vim.lsp.protocol.make_client_capabilities(),
+                        require("cmp_nvim_lsp").default_capabilities())
                     }
                 end,
                 ["pyright"] = function()
@@ -111,6 +113,12 @@ return {
                 ["lua_ls"] = function ()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
+                        capabilities = vim.tbl_deep_extend(
+                            "force",
+                            {},
+                            vim.lsp.protocol.make_client_capabilities(),
+                            require("cmp_nvim_lsp").default_capabilities()
+                        ),
                         settings = {
                             Lua = {
                                 diagnostics = {
@@ -122,30 +130,6 @@ return {
                 end,
             }
         },
-    },
-    {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        },
-        config = function(_, opts)
-            require('trouble').setup(opts)
-
-            vim.keymap.set("n", "<leader>tt", function()
-                require("trouble").toggle()
-            end)
-
-            vim.keymap.set("n", "<leader>[d", function()
-                require("trouble").next({ skip_groups = true, jump = true })
-            end)
-
-            vim.keymap.set("n", "<leader>]d", function()
-                require("trouble").previous({ skip_groups = true, jump = true })
-            end)
-        end
     },
     {
         "github/copilot.vim",

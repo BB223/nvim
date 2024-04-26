@@ -2,8 +2,10 @@ local function augroup(name)
     return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
+local autocmd = vim.api.nvim_create_autocmd
+
 -- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
     group = augroup("highlight_yank"),
     callback = function()
         vim.highlight.on_yank()
@@ -11,7 +13,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- close some filetypes with <q>
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
     group = augroup("close_with_q"),
     pattern = {
         "help",
@@ -25,7 +27,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd("BufWritePre", {
+autocmd("BufWritePre", {
     group = augroup("auto_create_dir"),
     callback = function(event)
         if event.match:match("^%w%w+://") then
@@ -37,12 +39,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Auto delete whitespace at the end of lines
-vim.api.nvim_create_autocmd("BufWritePre", {
+autocmd("BufWritePre", {
     group = augroup("auto_delete_whitespace"),
     command = [[%s/\s\+$//e]],
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
+autocmd("LspAttach", {
     group = augroup("lsp_attach"),
     callback = function(ev)
         local opts = { buffer = ev.buf }
@@ -50,11 +52,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
         vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
         vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-       -- vim.keymap.set("n", "<leader>d", function() vim.diagnostic.open_float() end, opts)
-       -- vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-       -- vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-        vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
+        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+        vim.keymap.set("n", "<leader>vca", function() vim.diagnostic.code_action() end, opts)
+        vim.keymap.set("n", "<leader>vrr", function() vim.diagnostic.references() end, opts)
+        vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+        -- vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+        -- vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
         vim.keymap.set("n", "<leader>gr", function () vim.lsp.buf.references() end, opts)
     end
 })
