@@ -52,7 +52,7 @@ return {
             })
 
             vim.diagnostic.config({
-                -- update_in_insert = true,
+                update_in_insert = true,
                 float = {
                     focusable = false,
                     style = "minimal",
@@ -134,5 +134,15 @@ return {
     {
         "github/copilot.vim",
         lazy = false,
+    },
+    {
+        "j-hui/fidget.nvim",
+        opts = {
+            notification = {
+                window = {
+                    winblend = 0,
+                },
+            }
+        }
     }
 }

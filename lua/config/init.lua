@@ -18,9 +18,6 @@ local opts = {
     defaults = {
         lazy = false,
     },
-    install = {
-        colorscheme = { 'rose-pine' }
-    },
     change_detection = {
         notify = false,
     },

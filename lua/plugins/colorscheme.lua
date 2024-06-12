@@ -14,24 +14,25 @@ return {
             vim.api.nvim_set_hl(0, 'LineNrAbove', { bold = true })
             vim.api.nvim_set_hl(0, 'LineNr', { bold = true })
             vim.api.nvim_set_hl(0, 'LineNrBelow', { bold = true })
-            vim.cmd.colorscheme('rose-pine')
+            -- vim.cmd[[colorscheme rose-pine]]
         end,
     },
     {
         "folke/tokyonight.nvim",
-        lazy = true,
+        lazy = false,
+        priority = 1000,
         opts = {
             style = "moon",
             transparent = true,
-            styles = {
-                floats = "transparent"
-            }
+            -- styles = {
+            -- },
         },
         config = function(_, opts)
             require('tokyonight').setup(opts)
-            vim.api.nvim_set_hl(0, 'LineNrAbove', { bold = true })
-            vim.api.nvim_set_hl(0, 'LineNr', { bold = true })
-            vim.api.nvim_set_hl(0, 'LineNrBelow', { bold = true })
+            -- vim.api.nvim_set_hl(0, 'LineNrAbove', { bold = true })
+            -- vim.api.nvim_set_hl(0, 'LineNr', { bold = true })
+            -- vim.api.nvim_set_hl(0, 'LineNrBelow', { bold = true })
+            vim.cmd[[colorscheme tokyonight]]
         end,
     },
 }
