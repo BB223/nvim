@@ -11,9 +11,9 @@ return {
         },
         config = function(_, opts)
             require('rose-pine').setup(opts)
-            vim.api.nvim_set_hl(0, 'LineNrAbove', { bold = true })
-            vim.api.nvim_set_hl(0, 'LineNr', { bold = true })
-            vim.api.nvim_set_hl(0, 'LineNrBelow', { bold = true })
+            -- vim.api.nvim_set_hl(0, 'LineNrAbove', { bold = true })
+            -- vim.api.nvim_set_hl(0, 'LineNr', { bold = true })
+            -- vim.api.nvim_set_hl(0, 'LineNrBelow', { bold = true })
             -- vim.cmd[[colorscheme rose-pine]]
         end,
     },
@@ -24,8 +24,9 @@ return {
         opts = {
             style = "moon",
             transparent = true,
-            -- styles = {
-            -- },
+            styles = {
+                comments = { bold = true },
+            },
         },
         config = function(_, opts)
             require('tokyonight').setup(opts)
