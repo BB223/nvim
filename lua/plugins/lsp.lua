@@ -30,12 +30,16 @@ return {
                 ["pyright"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.pyright.setup {
+                        capabilities = vim.tbl_deep_extend(
+                            "force",
+                            {},
+                            vim.lsp.protocol.make_client_capabilities(),
+                            require("cmp_nvim_lsp").default_capabilities()
+                        ),
                         settings = {
-                            pyright = {
-                                autoImportCompletion = true,
-                            },
                             python = {
                                 analysis = {
+                                    autoImportCompletion = true,
                                     autoSearchPaths = true,
                                     diagnosticMode = 'openFilesOnly',
                                     useLibraryCodeForTypes = true,
@@ -139,7 +143,7 @@ return {
                     focusable = false,
                     style = "minimal",
                     border = "rounded",
-                    source = "always",
+                    source = true,
                     header = "",
                     prefix = "",
                 },
@@ -149,6 +153,7 @@ return {
     {
         "github/copilot.vim",
         lazy = false,
+        enabled = false,
     },
     {
         "j-hui/fidget.nvim",
