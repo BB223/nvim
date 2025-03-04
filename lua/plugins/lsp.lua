@@ -1,4 +1,4 @@
-local capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(),
+local capabilities = vim.tbl_deep_extend("force", {},  vim.lsp.protocol.make_client_capabilities(),
     require("cmp_nvim_lsp").default_capabilities())
 return {
     {
@@ -56,6 +56,19 @@ return {
                             }
                         }
                     })
+                end,
+                ["texlab"] = function()
+                    require('lspconfig').texlab.setup({
+                        capabilities = capabilities,
+                        settings = {
+                            texlab = {
+                                build = {
+                                    executable = "arara",
+                                    args = { "%f" },
+                                },
+                            },
+                        },
+                    })
                 end
             }
         },
@@ -98,10 +111,5 @@ return {
         config = function(_, opts)
             require('java').setup(opts)
         end
-    },
-    {
-        "p00f/clangd_extensions.nvim",
-        opts = {},
-        enabled = false,
     },
 }
