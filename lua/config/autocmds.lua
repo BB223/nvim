@@ -63,3 +63,13 @@ autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
     end
 })
+
+autocmd("FileType", {
+    group = augroup("ft_indentation"),
+    pattern = "r,rmd,html,javascript,typescript,json,css,scss,vue,dart,yaml,markdown",
+    callback = function()
+        vim.bo.tabstop = 2
+        vim.bo.softtabstop = 2
+        vim.bo.shiftwidth = 2
+    end,
+})

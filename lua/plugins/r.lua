@@ -11,7 +11,9 @@ return {
     },
     opts = {
         R_args = { "--quiet", "--no-save" },
-        external_term = "tmux split-window -h -l 60",
+        external_term = "tmux split-window -d -v -p 25",
         auto_quit = true,
+        pipe_version = "magrittr",
+        pdfviewer = "firefox",
     },
 }
