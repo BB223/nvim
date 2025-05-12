@@ -73,3 +73,13 @@ autocmd("FileType", {
         vim.bo.shiftwidth = 2
     end,
 })
+
+autocmd("FileType", {
+    group = augroup("tex_fold"),
+    pattern = "plaintex,tex",
+    callback = function()
+        vim.opt.wrap = true
+        vim.opt.foldmethod = 'expr'
+        vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    end,
+})

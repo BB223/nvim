@@ -16,4 +16,5 @@ return {
         pipe_version = "magrittr",
         pdfviewer = "firefox",
     },
+    enabled = false,
 }

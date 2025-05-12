@@ -19,8 +19,12 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
 
 vim.opt.list = true
+vim.opt.listchars:append { precedes = '<', extends='>' }
 
 vim.opt.colorcolumn = "100"
+
+vim.g.tex_flavor = 'latex'

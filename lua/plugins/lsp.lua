@@ -108,8 +108,6 @@ return {
         "nvim-java/nvim-java",
         opts = {
         },
-        config = function(_, opts)
-            require('java').setup(opts)
-        end
+        main = 'java',
     },
 }
