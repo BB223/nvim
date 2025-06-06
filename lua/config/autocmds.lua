@@ -79,6 +79,7 @@ autocmd("FileType", {
     pattern = "plaintex,tex",
     callback = function()
         vim.opt.wrap = true
+        vim.bo.textwidth = 100
         vim.wo.foldmethod = 'expr'
         vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,

@@ -109,5 +109,6 @@ return {
         opts = {
         },
         main = 'java',
+        enabled = false,
     },
 }
