@@ -2,7 +2,8 @@ local capabilities = vim.tbl_deep_extend("force", {},  vim.lsp.protocol.make_cli
     require("cmp_nvim_lsp").default_capabilities())
 return {
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
+        version = "^1.0.0",
         build = ":MasonUpdate",
         cmd = "Mason",
         opts = {
@@ -16,9 +17,10 @@ return {
         },
     },
     {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
+        version = "^1.0.0",
         depencencies = {
-            "williamboman/mason.nvim",
+            "mason-org/mason.nvim",
         },
         opts = {
             ensure_installed = { "lua_ls" },
@@ -34,27 +36,6 @@ return {
                         flags = {
                             allow_incremental_sync = true,
                         },
-                        settings = {
-                            java = {
-                                configuration = {
-                                    runtimes = {
-                                        {
-                                            name = "JavaSE-21",
-                                            path = "/usr/lib/jvm/java-21-openjdk",
-                                            default = true
-                                        },
-                                        {
-                                            name = "JavaSE-17",
-                                            path = "/usr/lib/jvm/java-17-openjdk",
-                                        },
-                                        {
-                                            name = "JavaSE-11",
-                                            path = "/usr/lib/jvm/java-11-openjdk",
-                                        },
-                                    }
-                                }
-                            }
-                        }
                     })
                 end,
                 ["texlab"] = function()
@@ -77,7 +58,7 @@ return {
         "neovim/nvim-lspconfig",
         dependencies = {
             "nvim-java/nvim-java",
-            "williamboman/mason-lspconfig.nvim",
+            "mason-org/mason-lspconfig.nvim",
         },
         config = function()
             local lspconfig = require('lspconfig')
@@ -106,9 +87,7 @@ return {
     },
     {
         "nvim-java/nvim-java",
-        opts = {
-        },
+        opts = {},
         main = 'java',
-        enabled = false,
     },
 }
