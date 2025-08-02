@@ -7,7 +7,7 @@ local autocmd = vim.api.nvim_create_autocmd
 -- Highlight on yank
 autocmd("TextYankPost", {
     group = augroup("highlight_yank"),
-    callback = function()
+    callback = function(_)
         vim.highlight.on_yank()
     end,
 })
@@ -20,20 +20,20 @@ autocmd("FileType", {
         "man",
         "checkhealth",
     },
-    callback = function(event)
-        vim.bo[event.buf].buflisted = false
-        vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    callback = function(args)
+        vim.bo[args.buf].buflisted = false
+        vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = args.buf, silent = true })
     end,
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 autocmd("BufWritePre", {
     group = augroup("auto_create_dir"),
-    callback = function(event)
-        if event.match:match("^%w%w+://") then
+    callback = function(args)
+        if args.match:match("^%w%w+://") then
             return
         end
-        local file = vim.uv.fs_realpath(event.match) or event.match
+        local file = vim.uv.fs_realpath(args.match) or args.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
     end,
 })
@@ -44,11 +44,31 @@ autocmd("BufWritePre", {
     command = [[%s/\s\+$//e]],
 })
 
+local function set_makeprg_for_java()
+    local cwd = vim.fn.getcwd()
+    local gradle = cwd .. "/gradlew"
+    local maven = cwd .. "/mvnw"
+
+    if vim.fn.filereadable(gradle) == 1 then
+        vim.o.makeprg = gradle .. " assemble"
+    elseif vim.fn.filereadable(maven) == 1 then
+        vim.o.makeprg = maven .. " package"
+    else
+        vim.o.makeprg = "echo 'No build tool found'"
+    end
+end
+
 autocmd("LspAttach", {
     group = augroup("lsp_attach"),
-    callback = function(ev)
-        local opts = { buffer = ev.buf }
-
+    callback = function(args)
+        local opts = { buffer = args.buf }
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then
+            return
+        end
+        if client.name == 'jdtls' then
+            set_makeprg_for_java()
+        end
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
@@ -57,8 +77,8 @@ autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
         vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
         vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-        vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-        vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
+        vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
+        vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
         vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
         vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
     end
@@ -67,19 +87,19 @@ autocmd("LspAttach", {
 autocmd("FileType", {
     group = augroup("ft_indentation"),
     pattern = "r,rmd,html,javascript,typescript,json,css,scss,vue,dart,yaml,markdown,java,groovy",
-    callback = function()
-        vim.bo.tabstop = 2
-        vim.bo.softtabstop = 2
-        vim.bo.shiftwidth = 2
+    callback = function(args)
+        vim.bo[args.buf].tabstop = 2
+        vim.bo[args.buf].softtabstop = 2
+        vim.bo[args.buf].shiftwidth = 2
     end,
 })
 
 autocmd("FileType", {
     group = augroup("tex_fold"),
     pattern = "plaintex,tex",
-    callback = function()
+    callback = function(args)
         vim.opt.wrap = true
-        vim.bo.textwidth = 100
+        vim.bo[args].textwidth = 100
         vim.wo.foldmethod = 'expr'
         vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,
