@@ -66,7 +66,7 @@ autocmd("LspAttach", {
 
 autocmd("FileType", {
     group = augroup("ft_indentation"),
-    pattern = "r,rmd,html,javascript,typescript,json,css,scss,vue,dart,yaml,markdown",
+    pattern = "r,rmd,html,javascript,typescript,json,css,scss,vue,dart,yaml,markdown,java,groovy",
     callback = function()
         vim.bo.tabstop = 2
         vim.bo.softtabstop = 2
