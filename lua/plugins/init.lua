@@ -42,8 +42,4 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
   },
-  {
-    "andweeb/presence.nvim",
-    opts = {},
-  }
 }
