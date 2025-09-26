@@ -23,7 +23,7 @@ vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
 
 vim.opt.list = true
-vim.opt.listchars:append { precedes = '<', extends='>' }
+vim.opt.listchars:append { precedes = '<', extends = '>' }
 
 vim.opt.colorcolumn = "100"
 
