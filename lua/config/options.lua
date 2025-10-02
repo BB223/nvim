@@ -1,5 +1,9 @@
-vim.opt.nu = true
+vim.opt.number = true
 vim.opt.relativenumber = true
+
+vim.opt.splitright = true
+
+vim.opt.formatoptions:remove "o"
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -28,3 +32,5 @@ vim.opt.listchars:append { precedes = '<', extends = '>' }
 vim.opt.colorcolumn = "100"
 
 vim.g.tex_flavor = 'latex'
+
+vim.lsp.inlay_hint.enable(true);

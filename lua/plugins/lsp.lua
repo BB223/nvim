@@ -3,9 +3,6 @@ local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_clie
 return {
   {
     "mason-org/mason.nvim",
-    version = "^1.0.0",
-    build = ":MasonUpdate",
-    cmd = "Mason",
     opts = {
       ui = {
         icons = {
@@ -18,62 +15,42 @@ return {
   },
   {
     "mason-org/mason-lspconfig.nvim",
-    version = "^1.0.0",
     depencencies = {
       "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
     },
     opts = {
       ensure_installed = { "lua_ls" },
-      handlers = {
-        function(server_name)         -- default handler (optional)
-          require("lspconfig")[server_name].setup({
-            capabilities = capabilities
-          })
-        end,
-        ["jdtls"] = function()
-          require('lspconfig').jdtls.setup({
-            capabilities = capabilities,
-            flags = {
-              allow_incremental_sync = true,
-            },
-          })
-        end,
-        ["texlab"] = function()
-          require('lspconfig').texlab.setup({
-            capabilities = capabilities,
-            settings = {
-              texlab = {
-                build = {
-                  executable = "arara",
-                  args = { "%f" },
-                },
-              },
-            },
-          })
-        end
-      }
+      -- handlers = {
+      --   ["jdtls"] = function()
+      --     require('lspconfig').jdtls.setup({
+      --       capabilities = capabilities,
+      --       flags = {
+      --         allow_incremental_sync = true,
+      --       },
+      --     })
+      --   end,
+      --   ["texlab"] = function()
+      --     require('lspconfig').texlab.setup({
+      --       capabilities = capabilities,
+      --       settings = {
+      --         texlab = {
+      --           build = {
+      --             executable = "arara",
+      --             args = { "%f" },
+      --           },
+      --         },
+      --       },
+      --     })
+      --   end
+      -- }
     },
   },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "nvim-java/nvim-java",
-      "mason-org/mason-lspconfig.nvim",
-    },
+    opts = {},
     config = function()
-      local lspconfig = require('lspconfig')
-      lspconfig.dartls.setup({
-        capabilities = capabilities
-      })
-      lspconfig.gdscript.setup({
-        capabilities = capabilities
-      })
     end
-  },
-  {
-    "github/copilot.vim",
-    lazy = false,
-    enabled = false,
   },
   {
     "j-hui/fidget.nvim",
@@ -86,12 +63,55 @@ return {
     }
   },
   {
-    "nvim-java/nvim-java",
+    "mfussenegger/nvim-jdtls",
     opts = {
-      jdk = {
-        auto_install = false
+      settings = {
+        java = {
+          configuration = {
+            runtimes = {
+              {
+                name = "JavaSE-17",
+                path = "/usr/lib/jvm/java-17-openjdk/",
+              },
+              {
+                name = "JavaSE-21",
+                path = "/usr/lib/jvm/java-21-openjdk/",
+                default = true,
+              },
+            }
+          }
+        }
       }
     },
-    main = 'java',
-  },
+    config = function(_, opts)
+      local bundles = {
+        vim.fn.glob(
+          vim.fn.stdpath("data") ..
+          "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true
+        ),
+      }
+      local java_test_bundles = vim.split(
+        vim.fn.glob(
+          vim.fn.stdpath("data") ..
+          "/mason/packages/java-test/extension/server/*.jar", true
+        ), "\n"
+      )
+      local excluded = {
+        "com.microsoft.java.test.runner-jar-with-dependencies.jar",
+        "jacocoagent.jar",
+      }
+      for _, java_test_jar in ipairs(java_test_bundles) do
+        local fname = vim.fn.fnamemodify(java_test_jar, ":t")
+        if not vim.tbl_contains(excluded, fname) then
+          table.insert(bundles, java_test_jar)
+        end
+      end
+
+      opts.init_options = {
+        bundles = bundles
+      }
+
+      vim.lsp.config("jdtls", opts)
+    end,
+  }
 }
