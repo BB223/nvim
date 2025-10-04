@@ -1,5 +1,3 @@
-local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(),
-  require("cmp_nvim_lsp").default_capabilities())
 return {
   {
     "mason-org/mason.nvim",
@@ -21,35 +19,20 @@ return {
     },
     opts = {
       ensure_installed = { "lua_ls" },
-      -- handlers = {
-      --   ["jdtls"] = function()
-      --     require('lspconfig').jdtls.setup({
-      --       capabilities = capabilities,
-      --       flags = {
-      --         allow_incremental_sync = true,
-      --       },
-      --     })
-      --   end,
-      --   ["texlab"] = function()
-      --     require('lspconfig').texlab.setup({
-      --       capabilities = capabilities,
-      --       settings = {
-      --         texlab = {
-      --           build = {
-      --             executable = "arara",
-      --             args = { "%f" },
-      --           },
-      --         },
-      --       },
-      --     })
-      --   end
-      -- }
+      automatic_enable = {
+        exclude = { "rust_analyzer", },
+      },
     },
   },
   {
     "neovim/nvim-lspconfig",
     opts = {},
     config = function()
+      local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities())
+      vim.lsp.config("*", {
+        capabilities = capabilities
+      })
     end
   },
   {
@@ -65,6 +48,9 @@ return {
   {
     "mfussenegger/nvim-jdtls",
     opts = {
+      flags = {
+        allow_incremental_sync = false,
+      },
       settings = {
         java = {
           configuration = {
@@ -76,6 +62,10 @@ return {
               {
                 name = "JavaSE-21",
                 path = "/usr/lib/jvm/java-21-openjdk/",
+              },
+              {
+                name = "JavaSE-25",
+                path = "/usr/lib/jvm/java-25-openjdk/",
                 default = true,
               },
             }
@@ -113,5 +103,14 @@ return {
 
       vim.lsp.config("jdtls", opts)
     end,
+  },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^6', -- Recommended
+    lazy = false,   -- This plugin is already lazy
+    opts = {},
+    config = function (_, opts)
+      vim.g.rustaceanvim = opts
+    end
   }
 }

@@ -19,6 +19,7 @@ autocmd("FileType", {
     "help",
     "man",
     "checkhealth",
+    "dap-float",
   },
   callback = function(args)
     vim.bo[args.buf].buflisted = false

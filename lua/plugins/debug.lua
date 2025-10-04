@@ -2,21 +2,33 @@ return {
   {
     'mfussenegger/nvim-dap',
     keys = {
-      { "<leader>dB", "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", desc = "Breakpoint Condition" },
-      { "<leader>db", "<cmd>lua require('dap').toggle_breakpoint()<cr>",                                    desc = "Toggle Breakpoint" },
-      { "<leader>dc", "<cmd>lua require('dap').continue()<cr>",                                             desc = "Run/Continue" },
-      { "<leader>dC", "<cmd>lua require('dap').run_to_cursor()<cr>",                                        desc = "Run to Cursor" },
-      { "<leader>dg", "<cmd>lua require('dap').goto_()<cr>",                                                desc = "Go to Line (No Execute)" },
-      { "<leader>di", "<cmd>lua require('dap').step_into()<cr>",                                            desc = "Step Into" },
-      { "<leader>dj", "<cmd>lua require('dap').down()<cr>",                                                 desc = "Down" },
-      { "<leader>dk", "<cmd>lua require('dap').up()<cr>",                                                   desc = "Up" },
-      { "<leader>dl", "<cmd>lua require('dap').run_last()<cr>",                                             desc = "Run Last" },
-      { "<leader>do", "<cmd>lua require('dap').step_out()<cr>",                                             desc = "Step Out" },
-      { "<leader>dO", "<cmd>lua require('dap').step_over()<cr>",                                            desc = "Step Over" },
-      { "<leader>dP", "<cmd>lua require('dap').pause()<cr>",                                                desc = "Pause" },
-      { "<leader>ds", "<cmd>lua require('dap').session()<cr>",                                              desc = "Session" },
-      { "<leader>dt", "<cmd>lua require('dap').terminate()<cr>",                                            desc = "Terminate" },
-      { "<leader>dw", "<cmd>lua require('dap.ui.widgets').hover()<cr>",                                     desc = "Widgets" },
+      { '<F5>',       function() require('dap').continue() end,                                                    desc = "Run/Continue" },
+      { '<F29>',      function() require('dap').run_last() end,                                                    desc = "Run Last" },
+      { '<F17>',      function() require('dap').terminate() end,                                                   desc = "Terminate" },
+      { '<F10>',      function() require('dap').step_over() end,                                                   desc = "Step Over" },
+      { '<F11>',      function() require('dap').step_into() end,                                                   desc = "Step Into" },
+      { '<F23>',      function() require('dap').step_out() end,                                                    desc = "Step Out" },
+      { '<F9>',       function() require('dap').toggle_breakpoint() end,                                           desc = "Toggle Breakpoint" },
+      { '<F21>',      function() require('dap').set_breakpoint() end,                                              desc = "Set Breakpoint" },
+      { '<F33>',      function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, desc = "Set Log Point" },
+      { '<Leader>dh', function() require('dap.ui.widgets').hover() end,                                            desc = "Widgets Hover",    mode = { 'n', 'v' } },
+      { '<Leader>dp', function() require('dap.ui.widgets').preview() end,                                          desc = "Widgets Preview",  mode = { 'n', 'v' } },
+      {
+        '<Leader>df',
+        function()
+          local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.frames)
+        end,
+        desc = "Widgets Frames"
+      },
+      {
+        '<Leader>ds',
+        function()
+          local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.scopes)
+        end,
+        desc = "Widgets Scopes"
+      },
     },
     config = function()
       local dap, options = require('dap'), require('config.dap')
