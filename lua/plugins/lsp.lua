@@ -101,6 +101,7 @@ return {
         bundles = bundles
       }
 
+      vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
       vim.lsp.config("jdtls", opts)
     end,
   },
