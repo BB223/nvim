@@ -26,13 +26,36 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts = {},
-    config = function()
+    opts = {
+      ['vtsls'] = {
+        settings = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = {
+                {
+                  name = '@vue/typescript-plugin',
+                  location = vim.fn.stdpath('data') ..
+                      "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                  languages = { 'vue' },
+                  configNamespace = 'typescript',
+                }
+              },
+            },
+          },
+        },
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+      },
+    },
+    config = function(_, opts)
       local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(),
         require("cmp_nvim_lsp").default_capabilities())
       vim.lsp.config("*", {
         capabilities = capabilities
       })
+
+      for lsp, opt in pairs(opts) do
+        vim.lsp.config(lsp, opt)
+      end
     end
   },
   {
@@ -42,6 +65,7 @@ return {
         window = {
           winblend = 0,
         },
+        override_vim_notify = true,
       }
     }
   },
@@ -110,7 +134,7 @@ return {
     version = '^6', -- Recommended
     lazy = false,   -- This plugin is already lazy
     opts = {},
-    config = function (_, opts)
+    config = function(_, opts)
       vim.g.rustaceanvim = opts
     end
   }

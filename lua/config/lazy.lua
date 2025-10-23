@@ -17,6 +17,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('config.options')
 require('config.keymaps')
+require('config.filetype')
 
 require("lazy").setup({
   spec = {
@@ -28,8 +29,3 @@ require("lazy").setup({
 })
 
 require('config.autocmds')
-
-local projectfile = vim.fn.getcwd() .. '/project.godot'
-if vim.uv.fs_stat(projectfile) then
-  vim.fn.serverstart('/tmp/godot.pipe')
-end
