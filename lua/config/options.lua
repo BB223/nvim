@@ -3,8 +3,6 @@ vim.opt.relativenumber = true
 
 vim.opt.splitright = true
 
-vim.opt.formatoptions:remove "o"
-
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -17,7 +15,6 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
 
-vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true

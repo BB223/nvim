@@ -93,6 +93,17 @@ return {
                 default = true,
               },
             }
+          },
+          format = {
+            settings = {
+              url = 'https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml',
+              profile = 'GoogleStyle',
+            }
+          },
+          inlayHints = {
+            parameterNames = {
+              enabled = "all",
+            }
           }
         }
       }
@@ -125,7 +136,8 @@ return {
         bundles = bundles
       }
 
-      vim.env.JDTLS_JVM_ARGS = "-javaagent:" .. vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
+      local lombok_jar = vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
+      vim.env.JDTLS_JVM_ARGS = string.format("-javaagent:%s", lombok_jar)
       vim.lsp.config("jdtls", opts)
     end,
   },
