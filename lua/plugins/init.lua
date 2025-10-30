@@ -1,12 +1,12 @@
 return {
   {
     "folke/lazydev.nvim",
-    ft = "lua",     -- only load on lua files
+    ft = "lua", -- only load on lua files
     cmd = "LazyDev",
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        "nvim-dap-ui",dapui_config
+        "nvim-dap-ui"
       },
     },
   },
@@ -16,14 +16,15 @@ return {
       opts.sources = opts.sources or {}
       table.insert(opts.sources, {
         name = "lazydev",
-        group_index = 0,         -- set group index to 0 to skip loading LuaLS completions
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
       })
     end,
   },
   {
     "folke/ts-comments.nvim",
-    event = "VeryLazy",
     opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has("nvim-0.10.0") == 1,
   },
   {
     "tpope/vim-dispatch",

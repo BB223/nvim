@@ -22,11 +22,4 @@ return {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
   },
-  {
-    'nvim-telescope/telescope-symbols.nvim',
-    opts = {
-      sources = { 'emoji', 'kaomoji', 'gitmoji' },
-    },
-    enabled = false,
-  }
 }

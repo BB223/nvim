@@ -1,16 +1,17 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  branch = "master",
   build = ':TSUpdate',
   event = { "VeryLazy" },
   cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
   opts = {
-    ensure_installed = { "lua", "vim", "vimdoc" },
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
 
     -- Automatically install missing parsers when entering buffer
     -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
     auto_install = true,
+    parser_install_dir = vim.fn.stdpath('data') .. '/site',
 
     indent = {
       enable = true

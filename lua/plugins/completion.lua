@@ -8,8 +8,7 @@ return {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
 
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+      'petertriho/cmp-git',
     },
     config = function()
       local cmp = require('cmp')
@@ -18,7 +17,7 @@ return {
       cmp.setup({
         snippet = {
           expand = function(args)
-            require('luasnip').lsp_expand(args.body)             -- For `luasnip` users.
+            vim.snippet.expand(args.body)
           end,
         },
         window = {
@@ -33,11 +32,21 @@ return {
         }),
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
-          { name = 'luasnip' },
+          { name = 'path' },
         }, {
           { name = 'buffer' },
         })
       })
+
+      cmp.setup.filetype('gitcommit', {
+        sources = cmp.config.sources({
+          { name = 'git' },
+        }, {
+          { name = 'buffer' },
+        })
+      })
+      require("cmp_git").setup()
+
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
