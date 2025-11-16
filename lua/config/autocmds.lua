@@ -53,7 +53,7 @@ local function set_makeprg_for_java()
   if vim.fn.filereadable(gradle) == 1 then
     vim.o.makeprg = gradle .. " assemble"
   elseif vim.fn.filereadable(maven) == 1 then
-    vim.o.makeprg = maven .. " package"
+    vim.o.makeprg = maven .. " compile"
   else
     vim.o.makeprg = "echo 'No build tool found'"
   end
@@ -62,7 +62,6 @@ end
 autocmd("LspAttach", {
   group = augroup("lsp_attach"),
   callback = function(args)
-    local opts = { buffer = args.buf }
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if not client then
       return
@@ -70,18 +69,6 @@ autocmd("LspAttach", {
     if client.name == 'jdtls' then
       set_makeprg_for_java()
     end
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
-    vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-    vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-    vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
-    vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
-    vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
   end
 })
 
@@ -104,4 +91,16 @@ autocmd("FileType", {
     vim.wo.foldmethod = 'expr'
     vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
   end,
+})
+
+autocmd("FileType", {
+  group = augroup("java"),
+  pattern = "java",
+  callback = function(args)
+    vim.keymap.set("n", "<leader>f", function()
+      local view = vim.fn.winsaveview()
+      vim.cmd("silent %!google-java-format -")
+      vim.fn.winrestview(view)
+    end, { buffer = args.buf })
+  end
 })
