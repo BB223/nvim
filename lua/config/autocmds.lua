@@ -74,7 +74,10 @@ autocmd("LspAttach", {
 
 autocmd("FileType", {
   group = augroup("ft_indentation"),
-  pattern = "r,rmd,html,javascript,typescript,json,css,scss,vue,dart,yaml,markdown,java,groovy,lua,xml",
+  pattern = {
+    "r", "rmd", "html", "javascript", "typescript", "json", "css", "scss",
+    "vue", "dart", "yaml", "markdown", "java", "groovy", "lua", "xml"
+  },
   callback = function(args)
     vim.bo[args.buf].tabstop = 2
     vim.bo[args.buf].softtabstop = 2
@@ -84,8 +87,9 @@ autocmd("FileType", {
 
 autocmd("FileType", {
   group = augroup("tex_fold"),
-  pattern = "plaintex,tex",
+  pattern = { "plaintex", "tex", "latex" },
   callback = function(args)
+    vim.g.tex_flavor = 'latex'
     vim.opt.wrap = true
     vim.bo[args.buf].textwidth = 100
     vim.wo.foldmethod = 'expr'
@@ -103,4 +107,12 @@ autocmd("FileType", {
       vim.fn.winrestview(view)
     end, { buffer = args.buf })
   end
+})
+
+autocmd("FileType", {
+  group = augroup("treesitter"),
+  pattern = "*",
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
 })

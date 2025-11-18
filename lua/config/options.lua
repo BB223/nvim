@@ -28,8 +28,4 @@ vim.opt.listchars:append { precedes = '<', extends = '>' }
 
 vim.opt.colorcolumn = "100"
 
-vim.g.tex_flavor = 'latex'
-
-vim.lsp.inlay_hint.enable(true);
-
 vim.opt.statusline = '%<%f %h%w%m%r%=%-14.y %-14.(%l,%c%V%) %P'

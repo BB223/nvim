@@ -30,8 +30,8 @@ return {
     "tpope/vim-dispatch",
     opts = {},
     keys = {
-      { "<leader>m", "<cmd>Dispatch<cr>",  desc = "Dispatch :Make (Foreground)" },
-      { "<leader>M", "<cmd>Dispatch!<cr>", desc = "Dispatch :Make! (Background)" },
+      { "<leader>m", ":Dispatch<cr>",  desc = "Dispatch :Make (Foreground)" },
+      { "<leader>M", ":Dispatch!<cr>", desc = "Dispatch :Make! (Background)" },
     },
     cmd = { "Make", "Dispatch", "Focus", "Start" },
     config = function(_, _)
@@ -42,5 +42,8 @@ return {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
+  },
+  {
+    'tpope/vim-commentary',
   },
 }

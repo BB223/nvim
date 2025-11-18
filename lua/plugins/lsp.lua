@@ -75,6 +75,7 @@ return {
       for lsp, opt in pairs(opts) do
         vim.lsp.config(lsp, opt)
       end
+      vim.lsp.inlay_hint.enable()
     end
   },
   {
