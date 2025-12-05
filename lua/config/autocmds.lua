@@ -76,7 +76,7 @@ autocmd("FileType", {
   group = augroup("ft_indentation"),
   pattern = {
     "r", "rmd", "html", "javascript", "typescript", "json", "css", "scss",
-    "vue", "dart", "yaml", "markdown", "java", "groovy", "lua", "xml"
+    "vue", "dart", "yaml", "markdown", "groovy", "lua", "xml"
   },
   callback = function(args)
     vim.bo[args.buf].tabstop = 2
@@ -103,7 +103,7 @@ autocmd("FileType", {
   callback = function(args)
     vim.keymap.set("n", "<leader>f", function()
       local view = vim.fn.winsaveview()
-      vim.cmd("silent %!google-java-format -")
+      vim.cmd("silent %!google-java-format --aosp --skip-javadoc-formatting -")
       vim.fn.winrestview(view)
     end, { buffer = args.buf })
   end
