@@ -29,3 +29,5 @@ vim.opt.listchars:append { precedes = '<', extends = '>' }
 vim.opt.colorcolumn = "100"
 
 vim.opt.statusline = '%<%f %h%w%m%r%=%-14.y %-14.(%l,%c%V%) %P'
+
+vim.opt.diffopt:remove({"linematch:40"})

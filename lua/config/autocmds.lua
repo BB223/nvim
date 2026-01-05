@@ -75,7 +75,7 @@ autocmd("LspAttach", {
 autocmd("FileType", {
   group = augroup("ft_indentation"),
   pattern = {
-    "r", "rmd", "html", "javascript", "typescript", "json", "css", "scss",
+    "r", "rmd", "html", "javascript", "typescript", "json", "jsonc", "css", "scss",
     "vue", "dart", "yaml", "markdown", "groovy", "lua", "xml"
   },
   callback = function(args)

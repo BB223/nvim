@@ -45,3 +45,6 @@ vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = 1, float = tr
 vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = -1, float = true }) end)
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references)
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+
+vim.keymap.set("n", "do", ":diffget REMOTE<CR>")
+vim.keymap.set("n", "dp", ":diffget LOCAL<CR>")
