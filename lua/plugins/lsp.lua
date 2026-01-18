@@ -124,7 +124,8 @@ return {
             parameterNames = {
               enabled = "all",
             }
-          }
+          },
+          telemetry = false,
         }
       }
     },
@@ -155,6 +156,12 @@ return {
       opts.init_options = {
         bundles = bundles
       }
+
+      if vim.env.MAVEN_ARGS then
+        opts.settings.java.configuration.maven = {
+          userSettings = vim.fn.slice(vim.env.MAVEN_ARGS, 3)
+        }
+      end
 
       local lombok_jar = vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
       vim.env.JDTLS_JVM_ARGS = string.format("-javaagent:%s", lombok_jar)
