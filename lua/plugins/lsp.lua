@@ -64,6 +64,13 @@ return {
           }
         }
       },
+      ['lemminx'] = {
+        settings = {
+          xml = {
+            catalogs = { "/etc/xml/catalog" }
+          }
+        }
+      },
     },
     config = function(_, opts)
       local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(),

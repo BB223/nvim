@@ -1,0 +1,1 @@
+../../../../.local/share/nvim/lazy/nvim-lspconfig/lsp/jdtls.lua
