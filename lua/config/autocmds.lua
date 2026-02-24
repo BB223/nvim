@@ -103,7 +103,7 @@ autocmd("FileType", {
   callback = function(args)
     vim.keymap.set("n", "<leader>f", function()
       local view = vim.fn.winsaveview()
-      vim.cmd("silent %!google-java-format --aosp --skip-javadoc-formatting -")
+      vim.cmd("silent %!google-java-format --skip-javadoc-formatting -")
       vim.fn.winrestview(view)
     end, { buffer = args.buf })
   end

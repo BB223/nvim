@@ -4,6 +4,11 @@ M.adapters = {
   codelldb = {
     type = "executable",
     command = "codelldb",
+  },
+  godot = {
+    type = "server",
+    host = "127.0.0.1",
+    port = 6006,
   }
 }
 
@@ -50,6 +55,16 @@ M.configurations = {
       hostName = "127.0.0.1",
       port = 5005,
     },
+  },
+  gdscript = {
+    {
+      type = "godot",
+      request = "launch",
+      name = "GDScript Godot",
+      project = "${workspaceFolder}",
+      port = 6006,
+      debugServer = 6007,
+    }
   }
 }
 

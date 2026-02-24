@@ -83,6 +83,10 @@ return {
         vim.lsp.config(lsp, opt)
       end
       vim.lsp.inlay_hint.enable()
+
+      vim.lsp.enable("gdscript")
+      -- vim.lsp.enable("gdshader_lsp")
+      vim.lsp.enable("roslyn_ls")
     end
   },
   {
