@@ -1,5 +1,18 @@
 return {
   {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    ---@module 'lazydev'
+    ---@type lazydev.Config
+    opts = {
+      ---@type lazydev.Library.spec[]
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        "nvim-dap-ui"
+      },
+    },
+  },
+  {
     "mason-org/mason.nvim",
     cmd = "Mason",
     build = ":MasonUpdate",
@@ -73,12 +86,6 @@ return {
       },
     },
     config = function(_, opts)
-      local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities())
-      vim.lsp.config("*", {
-        capabilities = capabilities
-      })
-
       for lsp, opt in pairs(opts) do
         vim.lsp.config(lsp, opt)
       end

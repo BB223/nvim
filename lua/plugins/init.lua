@@ -1,24 +1,26 @@
 return {
   {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    cmd = "LazyDev",
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
     opts = {
-      library = {
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        "nvim-dap-ui"
-      },
+      style = "moon",
+      transparent = true,
+      on_highlights = function(hl, colors)
+        hl.LineNrAbove = vim.tbl_extend('force', hl.LineNrAbove, {
+          fg = colors.fg,
+          bold = true
+        })
+        hl.LineNr = vim.tbl_extend('force', hl.LineNr, {
+          fg = colors.fg,
+          bold = true
+        })
+        hl.LineNrBelow = vim.tbl_extend('force', hl.LineNrBelow, {
+          fg = colors.fg,
+          bold = true
+        })
+      end
     },
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, {
-        name = "lazydev",
-        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-      })
-    end,
   },
   {
     "folke/ts-comments.nvim",

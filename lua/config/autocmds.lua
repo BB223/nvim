@@ -76,7 +76,7 @@ autocmd("FileType", {
   group = augroup("ft_indentation"),
   pattern = {
     "r", "rmd", "html", "javascript", "typescript", "json", "jsonc", "css", "scss",
-    "vue", "dart", "yaml", "markdown", "groovy", "lua", "xml"
+    "vue", "dart", "yaml", "markdown", "groovy", "lua", "xml", "java"
   },
   callback = function(args)
     vim.bo[args.buf].tabstop = 2
@@ -113,6 +113,9 @@ autocmd("FileType", {
   group = augroup("treesitter"),
   pattern = "*",
   callback = function()
-    pcall(vim.treesitter.start)
+    local status, message = pcall(vim.treesitter.start)
+    if not status and message then
+      vim.notify(message, vim.log.levels.DEBUG)
+    end
   end,
 })
