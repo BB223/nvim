@@ -3,7 +3,7 @@ return {
     'hrsh7th/nvim-cmp',
     version = false,
     dependencies = {
-      "neovim/nvim-lspconfig",
+      'neovim/nvim-lspconfig',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
@@ -12,10 +12,10 @@ return {
       'petertriho/cmp-git',
     },
     opts = function()
-      vim.lsp.config("*", { capabilities = require("cmp_nvim_lsp").default_capabilities() })
+      vim.lsp.config('*', { capabilities = require('cmp_nvim_lsp').default_capabilities() })
 
       local cmp = require('cmp')
-      local defaults = require("cmp.config.default")()
+      local defaults = require('cmp.config.default')()
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
       return {
@@ -27,18 +27,18 @@ return {
         mapping = cmp.mapping.preset.insert({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-          ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+          ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+          ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
           ['<C-y>'] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
-          { name = "lazydev" },
-          { name = "nvim_lsp" },
-          { name = "path" },
+          { name = 'lazydev' },
+          { name = 'nvim_lsp' },
+          { name = 'path' },
         }, {
-          { name = "buffer" },
+          { name = 'buffer' },
         }),
       }
     end,
@@ -52,7 +52,7 @@ return {
           { name = 'buffer' },
         })
       })
-      require("cmp_git").setup({})
+      require('cmp_git').setup({})
 
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline({ '/', '?' }, {

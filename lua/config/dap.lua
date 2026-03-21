@@ -2,12 +2,12 @@ local M = {}
 
 M.adapters = {
   codelldb = {
-    type = "executable",
-    command = "codelldb",
+    type = 'executable',
+    command = 'codelldb',
   },
   godot = {
-    type = "server",
-    host = "127.0.0.1",
+    type = 'server',
+    host = '127.0.0.1',
     port = 6006,
   }
 }
@@ -15,22 +15,22 @@ M.adapters = {
 M.configurations = {
   cpp = {
     {
-      name = "Launch file",
-      type = "codelldb",
-      request = "launch",
+      name = 'Launch file',
+      type = 'codelldb',
+      request = 'launch',
       program = function()
         return coroutine.create(function(coro)
-          local pickers = require("telescope.pickers")
-          local finders = require("telescope.finders")
-          local conf = require("telescope.config").values
-          local actions = require("telescope.actions")
-          local action_state = require("telescope.actions.state")
+          local pickers = require('telescope.pickers')
+          local finders = require('telescope.finders')
+          local conf = require('telescope.config').values
+          local actions = require('telescope.actions')
+          local action_state = require('telescope.actions.state')
 
           local opts = {}
           pickers
               .new(opts, {
-                prompt_title = "Path to executable",
-                finder = finders.new_oneshot_job({ "fd", "--hidden", "--no-ignore", "--type", "x" }, {}),
+                prompt_title = 'Path to executable',
+                finder = finders.new_oneshot_job({ 'fd', '--hidden', '--no-ignore', '--type', 'x' }, {}),
                 sorter = conf.generic_sorter(opts),
                 attach_mappings = function(buffer_number)
                   actions.select_default:replace(function()
@@ -51,17 +51,17 @@ M.configurations = {
     {
       type = 'java',
       request = 'attach',
-      name = "Debug (Attach) - Remote",
-      hostName = "127.0.0.1",
+      name = 'Debug (Attach) - Remote',
+      hostName = '127.0.0.1',
       port = 5005,
     },
   },
   gdscript = {
     {
-      type = "godot",
-      request = "launch",
-      name = "GDScript Godot",
-      project = "${workspaceFolder}",
+      type = 'godot',
+      request = 'launch',
+      name = 'GDScript Godot',
+      project = '${workspaceFolder}',
       port = 6006,
       debugServer = 6007,
     }

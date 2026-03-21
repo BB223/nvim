@@ -1,4 +1,4 @@
 return {
-  "BB223/redact_pass.nvim",
+  'BB223/redact_pass.nvim',
   opts = {},
 }

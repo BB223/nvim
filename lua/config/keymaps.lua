@@ -1,50 +1,37 @@
-vim.g.mapleader = " "
+vim.keymap.set('n', '<leader>pv', vim.cmd.Oil)
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Oil)
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+vim.keymap.set('n', 'J', 'mzJ`z')
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
 
 -- greatest remap ever
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set('x', '<leader>p', [['_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({ 'n', 'v' }, '<leader>y', [['+y]])
+vim.keymap.set('n', '<leader>Y', [['+Y]])
 
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+vim.keymap.set({ 'n', 'v' }, '<leader>d', [['_d]])
 
-vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<C-f>", ":silent !tmux neww tmux-sessionizer<CR>")
+vim.keymap.set('n', 'Q', '<nop>')
+vim.keymap.set('n', '<C-f>', ':silent !tmux neww tmux-sessionizer<CR>')
 
-vim.keymap.set("n", "<C-k>", ":cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", ":cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", ":lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", ":lprev<CR>zz")
+vim.keymap.set('n', '<C-k>', ':cnext<CR>zz')
+vim.keymap.set('n', '<C-j>', ':cprev<CR>zz')
+vim.keymap.set('n', '<leader>k', ':lnext<CR>zz')
+vim.keymap.set('n', '<leader>j', ':lprev<CR>zz')
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", ":!chmod +x %<CR>", { silent = true })
+-- vim.keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
-vim.keymap.set("n", "<leader><leader>", vim.cmd.source)
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
-vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-vim.keymap.set("n", "K", vim.lsp.buf.hover)
-vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol)
-vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action)
-vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references)
-vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename)
-vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help)
-vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = 1, float = true }) end)
-vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = -1, float = true }) end)
-vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references)
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
-
-vim.keymap.set("n", "do", ":diffget REMOTE<CR>")
-vim.keymap.set("n", "dp", ":diffget LOCAL<CR>")
+if vim.wo.diff then
+  vim.keymap.set('n', 'do', ':diffget REMOTE<CR>')
+  vim.keymap.set('n', 'dp', ':diffget LOCAL<CR>')
+end

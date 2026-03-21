@@ -1,33 +1,71 @@
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
-vim.opt.splitright = true
+vim.g.have_nerd_font = true
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.smartindent = true
+vim.o.number = true
+vim.o.relativenumber = true
 
-vim.opt.wrap = false
+vim.o.showmode = true
 
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undofile = true
+vim.o.breakindent = false
 
-vim.opt.incsearch = true
+vim.o.undofile = true
 
-vim.opt.termguicolors = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
-vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 8
-vim.opt.signcolumn = "yes"
+vim.o.signcolumn = 'yes'
 
-vim.opt.list = true
+vim.o.splitright = true
+vim.o.splitbelow = true
+
+vim.o.list = true
 vim.opt.listchars:append { precedes = '<', extends = '>' }
 
-vim.opt.colorcolumn = "100"
+vim.o.inccommand = 'split'
 
-vim.opt.statusline = '%<%f %h%w%m%r%=%-14.y %-14.(%l,%c%V%) %P'
+vim.o.cursorline = false
 
-vim.opt.diffopt:remove({"linematch:40"})
+vim.o.scrolloff = 10
+
+vim.o.confirm = true
+
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.diagnostic.config({
+  update_in_insert = false,
+  severity_sort = true,
+  float = { source = 'if_many' },
+  underline = { severity = { min = vim.diagnostic.severity.WARN } },
+  -- Can switch between these as you prefer
+  virtual_text = true,   -- Text shows up at the end of the line
+  virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+  jump = { float = true },
+})
+
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('options-highlight-yank', { clear = true }),
+  callback = function() vim.hl.on_yank() end,
+})
+
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+
+vim.o.wrap = false
+
+vim.o.swapfile = false
+vim.o.backup = false
+
+vim.o.colorcolumn = '100'
+
+vim.o.statusline = '%<%f %h%w%m%r%=%-14.y %-14.(%l,%c%V%) %P'
+
+vim.opt.diffopt:remove({ 'linematch:40' })

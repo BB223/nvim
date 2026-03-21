@@ -1,63 +1,36 @@
 return {
   {
     'mfussenegger/nvim-dap',
+    dependencies = {
+      'rcarriga/nvim-dap-ui',
+      'nvim-neotest/nvim-nio',
+      'mason-org/mason.nvim',
+      'jay-babu/mason-nvim-dap.nvim',
+    },
     keys = {
-      { '<F5>',       function() require('dap').continue() end,                                                    desc = "Run/Continue" },
-      { '<F29>',      function() require('dap').run_last() end,                                                    desc = "Run Last" },
-      { '<F17>',      function() require('dap').terminate() end,                                                   desc = "Terminate" },
-      { '<F10>',      function() require('dap').step_over() end,                                                   desc = "Step Over" },
-      { '<F11>',      function() require('dap').step_into() end,                                                   desc = "Step Into" },
-      { '<F23>',      function() require('dap').step_out() end,                                                    desc = "Step Out" },
-      { '<F9>',       function() require('dap').toggle_breakpoint() end,                                           desc = "Toggle Breakpoint" },
-      { '<F21>',      function() require('dap').set_breakpoint() end,                                              desc = "Set Breakpoint" },
-      { '<F33>',      function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, desc = "Set Log Point" },
-      { '<Leader>dh', function() require('dap.ui.widgets').hover() end,                                            desc = "Widgets Hover",    mode = { 'n', 'v' } },
-      { '<Leader>dp', function() require('dap.ui.widgets').preview() end,                                          desc = "Widgets Preview",  mode = { 'n', 'v' } },
-      {
-        '<Leader>df',
-        function()
-          local widgets = require('dap.ui.widgets')
-          widgets.centered_float(widgets.frames)
-        end,
-        desc = "Widgets Frames"
-      },
-      {
-        '<Leader>ds',
-        function()
-          local widgets = require('dap.ui.widgets')
-          widgets.centered_float(widgets.scopes)
-        end,
-        desc = "Widgets Scopes"
-      },
+      -- Basic debugging keymaps, feel free to change to your liking!
+      { '<F5>',      function() require('dap').continue() end,                                            desc = 'Debug: Start/Continue' },
+      { '<F1>',      function() require('dap').step_into() end,                                           desc = 'Debug: Step Into' },
+      { '<F2>',      function() require('dap').step_over() end,                                           desc = 'Debug: Step Over' },
+      { '<F3>',      function() require('dap').step_out() end,                                            desc = 'Debug: Step Out' },
+      { '<leader>b', function() require('dap').toggle_breakpoint() end,                                   desc = 'Debug: Toggle Breakpoint' },
+      { '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Debug: Set Breakpoint' },
+      -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+      { '<F7>',      function() require('dapui').toggle() end,                                            desc = 'Debug: See last session result.' },
     },
     config = function()
-      local dap, options = require('dap'), require('config.dap')
+      local dap = require('dap')
+      local dapui = require('dapui')
+      local options = require('config.dap')
       dap.adapters = options.adapters
       dap.configurations = options.configurations
-    end,
-  },
-  {
-    'rcarriga/nvim-dap-ui',
-    dependencies = {
-      "mfussenegger/nvim-dap",
-      "nvim-neotest/nvim-nio",
-    },
-    opts = {},
-    config = function(_, opts)
-      local dap, dapui = require("dap"), require("dapui")
-      dapui.setup(opts)
-      dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-      end
+
+      ---@diagnostic disable-next-line: missing-fields
+      dapui.setup({})
+
+      dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+      dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+      dap.listeners.before.event_exited['dapui_config'] = dapui.close
     end,
   },
   {
@@ -67,10 +40,6 @@ return {
   {
     'jay-babu/mason-nvim-dap.nvim',
     enabled = false,
-    dependencies = {
-      'mason-org/mason.nvim',
-      'mfussenegger/nvim-dap',
-    },
     opts = {
       handlers = {
         function(config)
