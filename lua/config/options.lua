@@ -69,3 +69,8 @@ vim.o.colorcolumn = '100'
 vim.o.statusline = '%<%f %h%w%m%r%=%-14.y %-14.(%l,%c%V%) %P'
 
 vim.opt.diffopt:remove({ 'linematch:40' })
+
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0

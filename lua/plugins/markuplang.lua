@@ -8,7 +8,7 @@ return {
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
-      completion = {
+      completions = {
         lsp = {
           enabled = true
         }
