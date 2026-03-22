@@ -12,7 +12,9 @@ return {
       'petertriho/cmp-git',
     },
     opts = function()
-      vim.lsp.config('*', { capabilities = require('cmp_nvim_lsp').default_capabilities() })
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      vim.lsp.config('*', { capabilities = capabilities })
 
       local cmp = require('cmp')
       local defaults = require('cmp.config.default')()
