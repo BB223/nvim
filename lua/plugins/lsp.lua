@@ -172,6 +172,7 @@ return {
   },
   {
     'mfussenegger/nvim-jdtls',
+    branch = 'master',
     opts = {
       flags = {
         allow_incremental_sync = false,
