@@ -24,7 +24,7 @@ require('lazy').setup({
     colorscheme = { 'tokyonight' }
   },
   defaults = {
-    version = '*'
+    version = false
   },
   spec = {
     { import = 'plugins' },

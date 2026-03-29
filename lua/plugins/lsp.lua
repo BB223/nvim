@@ -172,7 +172,6 @@ return {
   },
   {
     'mfussenegger/nvim-jdtls',
-    branch = 'master',
     opts = {
       flags = {
         allow_incremental_sync = false,
@@ -253,8 +252,8 @@ return {
   },
   {
     'mrcjkb/rustaceanvim',
-    version = '^6', -- Recommended
-    lazy = false,   -- This plugin is already lazy
+    version = '^8',
+    lazy = false,
     opts = {},
     config = function(_, opts)
       vim.g.rustaceanvim = opts
