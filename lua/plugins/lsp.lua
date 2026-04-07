@@ -15,11 +15,11 @@ return {
               globalPlugins = {
                 {
                   name = '@vue/typescript-plugin',
-                  location = vim.fn.stdpath('data') ..
-                      '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                  location = vim.fn.stdpath('data')
+                    .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
                   languages = { 'vue' },
                   configNamespace = 'typescript',
-                }
+                },
               },
             },
           },
@@ -39,22 +39,27 @@ return {
                 '.gitlab-ci.yaml',
               },
               ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
-            }
-          }
-        }
+            },
+          },
+        },
       },
       ['lemminx'] = {
         settings = {
           xml = {
-            catalogs = { '/etc/xml/catalog' }
-          }
-        }
+            catalogs = { '/etc/xml/catalog' },
+          },
+        },
       },
       ['lua_ls'] = {
         on_init = function(client)
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
-            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
+            if
+              path ~= vim.fn.stdpath('config')
+              and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+            then
+              return
+            end
           end
 
           client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
@@ -106,7 +111,7 @@ return {
               group = vim.api.nvim_create_augroup('lspconfig-lsp-detach', { clear = true }),
               callback = function(event2)
                 vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds { group = 'lspconfig-lsp-highlight', buffer = event2.buf }
+                vim.api.nvim_clear_autocmds({ group = 'lspconfig-lsp-highlight', buffer = event2.buf })
               end,
             })
           end
@@ -115,9 +120,9 @@ return {
           --
           -- This may be unwanted, since they displace some of your code
           if client and client:supports_method('textDocument/inlayHint', event.buf) then
-            vim.keymap.set('n', '<leader>th',
-              function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end,
-              { buffer = event.buf, desc = 'LSP: [T]oggle Inlay [H]ints' })
+            vim.keymap.set('n', '<leader>th', function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+            end, { buffer = event.buf, desc = 'LSP: [T]oggle Inlay [H]ints' })
           end
         end,
       })
@@ -131,7 +136,7 @@ return {
       vim.lsp.enable('gdscript')
       -- vim.lsp.enable('gdshader_lsp')
       vim.lsp.enable('roslyn_ls')
-    end
+    end,
   },
   {
     'mason-org/mason.nvim',
@@ -145,8 +150,8 @@ return {
         icons = {
           package_installed = '✓',
           package_pending = '➜',
-          package_uninstalled = '✗'
-        }
+          package_uninstalled = '✗',
+        },
       },
     },
   },
@@ -155,7 +160,7 @@ return {
     opts = {
       ensure_installed = { 'lua_ls' },
       automatic_enable = {
-        exclude = { 'rust_analyzer', },
+        exclude = { 'rust_analyzer' },
       },
     },
   },
@@ -167,8 +172,8 @@ return {
           winblend = 0,
         },
         override_vim_notify = true,
-      }
-    }
+      },
+    },
   },
   {
     'mfussenegger/nvim-jdtls',
@@ -193,36 +198,33 @@ return {
                 path = '/usr/lib/jvm/java-25-openjdk/',
                 default = true,
               },
-            }
+            },
           },
           format = {
             settings = {
               url = 'https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml',
               profile = 'GoogleStyle',
-            }
+            },
           },
           inlayHints = {
             parameterNames = {
               enabled = 'all',
-            }
+            },
           },
           telemetry = false,
-        }
-      }
+        },
+      },
     },
     config = function(_, opts)
       local bundles = {
         vim.fn.glob(
-          vim.fn.stdpath('data') ..
-          '/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', true
+          vim.fn.stdpath('data')
+            .. '/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar',
+          true
         ),
       }
-      local java_test_bundles = vim.split(
-        vim.fn.glob(
-          vim.fn.stdpath('data') ..
-          '/mason/packages/java-test/extension/server/*.jar', true
-        ), '\n'
-      )
+      local java_test_bundles =
+        vim.split(vim.fn.glob(vim.fn.stdpath('data') .. '/mason/packages/java-test/extension/server/*.jar', true), '\n')
       local excluded = {
         'com.microsoft.java.test.runner-jar-with-dependencies.jar',
         'jacocoagent.jar',
@@ -235,12 +237,12 @@ return {
       end
 
       opts.init_options = {
-        bundles = bundles
+        bundles = bundles,
       }
 
       if vim.env.MAVEN_ARGS then
         opts.settings.java.configuration.maven = {
-          userSettings = vim.fn.slice(vim.env.MAVEN_ARGS, 3)
+          userSettings = vim.fn.slice(vim.env.MAVEN_ARGS, 3),
         }
       end
 
@@ -257,6 +259,6 @@ return {
     opts = {},
     config = function(_, opts)
       vim.g.rustaceanvim = opts
-    end
-  }
+    end,
+  },
 }
