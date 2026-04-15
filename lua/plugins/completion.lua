@@ -1,8 +1,5 @@
 return {
   'saghen/blink.cmp',
-  dependencies = {
-    'disrupted/blink-cmp-conventional-commits',
-  },
   version = '1.*',
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
