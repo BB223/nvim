@@ -12,6 +12,7 @@ autocmd('FileType', {
     'man',
     'checkhealth',
     'dap-float',
+    'lsplog',
   },
   callback = function(args)
     vim.bo[args.buf].buflisted = false
@@ -93,14 +94,12 @@ autocmd('FileType', {
 })
 
 autocmd('FileType', {
-  group = augroup('tex_fold'),
+  group = augroup('tex'),
   pattern = { 'plaintex', 'tex', 'latex' },
   callback = function(args)
     vim.g.tex_flavor = 'latex'
     vim.opt.wrap = true
     vim.bo[args.buf].textwidth = 100
-    vim.wo.foldmethod = 'expr'
-    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
   end,
 })
 

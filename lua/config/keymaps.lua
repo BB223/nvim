@@ -26,9 +26,10 @@ vim.keymap.set('n', '<C-j>', ':cprev<CR>zz')
 vim.keymap.set('n', '<leader>k', ':lnext<CR>zz')
 vim.keymap.set('n', '<leader>j', ':lprev<CR>zz')
 
--- vim.keymap.set('n', '<leader>s', '<CMD>%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>')
+-- vim.keymap.set('n', '<leader>s', ':%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>')
 
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+vim.keymap.set('n', 'grd', vim.lsp.buf.declaration)
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
 
 if vim.wo.diff then
