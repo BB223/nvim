@@ -2,6 +2,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     depencencies = {
+      'mfussenegger/nvim-jdtls',
       'mason-org/mason.nvim',
       'mason-org/mason-lspconfig.nvim',
       'j-hui/fidget.nvim',
@@ -50,10 +51,6 @@ return {
         override_vim_notify = true,
       },
     },
-  },
-  {
-    'mfussenegger/nvim-jdtls',
-    config = function() end,
   },
   {
     'mrcjkb/rustaceanvim',

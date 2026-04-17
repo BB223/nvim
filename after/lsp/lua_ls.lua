@@ -27,6 +27,7 @@ return {
       },
     })
   end,
+  ---@type lspconfig.settings.lua_ls
   settings = {
     Lua = {},
   },

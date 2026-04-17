@@ -1,5 +1,6 @@
 ---@type vim.lsp.Config
 return {
+  ---@type lspconfig.settings.yamlls
   settings = {
     yaml = {
       schemaStore = {
@@ -12,6 +13,11 @@ return {
           '.gitlab-ci.yaml',
         },
         ['https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
+      },
+    },
+    redhat = {
+      telemetry = {
+        enabled = false,
       },
     },
   },
