@@ -35,4 +35,8 @@ require('lazy').setup({
   },
 })
 
+vim.cmd.packadd('nvim.undotree')
+vim.keymap.set('n', '<leader>u', ':Undotree<CR>')
+vim.cmd.packadd('nohlsearch')
+
 require('config.autocmds')

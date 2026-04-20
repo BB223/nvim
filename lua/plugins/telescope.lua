@@ -1,28 +1,100 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
-    event = 'VimEnter',
+    version = '*',
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
-        cond = function() return vim.fn.executable('make') == 1 end,
+        cond = function()
+          return vim.fn.executable('make') == 1
+        end,
       },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      'nvim-telescope/telescope-ui-select.nvim',
+      'nvim-tree/nvim-web-devicons'
     },
     keys = {
-      { '<leader>sh',       function() require('telescope.builtin').help_tags() end,   mode = 'n',          desc = '[S]earch [H]elp' },
-      { '<leader>sf',       function() require('telescope.builtin').find_files() end,  mode = 'n',          desc = '[S]earch [F]iles' },
-      { '<leader>ss',       function() require('telescope.builtin').builtin() end,     mode = 'n',          desc = '[S]earch [S]elect Telescope' },
-      { '<leader>sw',       function() require('telescope.builtin').grep_string() end, mode = { 'n', 'v' }, desc = '[S]earch current [W]ord' },
-      { '<leader>sg',       function() require('telescope.builtin').live_grep() end,   mode = 'n',          desc = '[S]earch by [G]rep' },
-      { '<leader>sd',       function() require('telescope.builtin').diagnostics() end, mode = 'n',          desc = '[S]earch [D]iagnostics' },
-      { '<leader>sr',       function() require('telescope.builtin').resume() end,      mode = 'n',          desc = '[S]earch [R]esume' },
-      { '<leader>s.',       function() require('telescope.builtin').oldfiles() end,    mode = 'n',          desc = '[S]earch Recent Files ("." for repeat)' },
-      { '<leader>sc',       function() require('telescope.builtin').commands() end,    mode = 'n',          desc = '[S]earch [C]ommands' },
-      { '<leader><leader>', function() require('telescope.builtin').buffers() end,     mode = 'n',          desc = '[ ] Find existing buffers' },
+      {
+        '<leader>sh',
+        function()
+          require('telescope.builtin').help_tags()
+        end,
+        mode = 'n',
+        desc = '[S]earch [H]elp',
+      },
+      {
+        '<leader>sf',
+        function()
+          require('telescope.builtin').find_files()
+        end,
+        mode = 'n',
+        desc = '[S]earch [F]iles',
+      },
+      {
+        '<leader>ss',
+        function()
+          require('telescope.builtin').builtin()
+        end,
+        mode = 'n',
+        desc = '[S]earch [S]elect Telescope',
+      },
+      {
+        '<leader>sw',
+        function()
+          require('telescope.builtin').grep_string()
+        end,
+        mode = { 'n', 'v' },
+        desc = '[S]earch current [W]ord',
+      },
+      {
+        '<leader>sg',
+        function()
+          require('telescope.builtin').live_grep()
+        end,
+        mode = 'n',
+        desc = '[S]earch by [G]rep',
+      },
+      {
+        '<leader>sd',
+        function()
+          require('telescope.builtin').diagnostics()
+        end,
+        mode = 'n',
+        desc = '[S]earch [D]iagnostics',
+      },
+      {
+        '<leader>sr',
+        function()
+          require('telescope.builtin').resume()
+        end,
+        mode = 'n',
+        desc = '[S]earch [R]esume',
+      },
+      {
+        '<leader>s.',
+        function()
+          require('telescope.builtin').oldfiles()
+        end,
+        mode = 'n',
+        desc = '[S]earch Recent Files ("." for repeat)',
+      },
+      {
+        '<leader>sc',
+        function()
+          require('telescope.builtin').commands()
+        end,
+        mode = 'n',
+        desc = '[S]earch [C]ommands',
+      },
+      {
+        '<leader><leader>',
+        function()
+          require('telescope.builtin').buffers()
+        end,
+        mode = 'n',
+        desc = '[ ] Find existing buffers',
+      },
     },
     opts = {
       defaults = {
@@ -30,9 +102,9 @@ return {
           'truncate',
           shorten = {
             len = 4,
-            exclude = { -2, -1 }
-          }
-        }
+            exclude = { -2, -1 },
+          },
+        },
       },
       extensions = {
         ['ui-select'] = { require('telescope.themes').get_dropdown() },
@@ -44,56 +116,54 @@ return {
       require('telescope').load_extension('ui-select')
 
       local builtin = require('telescope.builtin')
-      vim.api.nvim_create_autocmd('LspAttach',
-        {
-          group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
-          callback = function(event)
-            local buf = event.buf
-            -- Find references for the word under your cursor.
-            vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
-            -- Jump to the implementation of the word under your cursor.
-            -- Useful when your language has ways of declaring types without an actual implementation.
-            vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
-            -- Jump to the definition of the word under your cursor.
-            -- This is where a variable was first declared, or where a function is defined, etc.
-            -- To jump back, press <C-t>.
-            vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
-            -- Fuzzy find all the symbols in your current document.
-            -- Symbols are things like variables, functions, types, etc.
-            vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-            -- Fuzzy find all the symbols in your current workspace.
-            -- Similar to document symbols, except searches over your entire project.
-            vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols,
-              { buffer = buf, desc = 'Open Workspace Symbols' })
-            -- Jump to the type of the word under your cursor.
-            -- Useful when you're not sure what type a variable is and you want to see
-            -- the definition of its *type*, not where it was *defined*.
-            vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
-          end,
-        })
-      -- Override default behavior and theme when searching
-      vim.keymap.set('n', '<leader>/',
-        function()
-          -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-          builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({ winblend = 10, previewer = false, }))
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
+        callback = function(event)
+          local buf = event.buf
+          -- Find references for the word under your cursor.
+          vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+          -- Jump to the implementation of the word under your cursor.
+          -- Useful when your language has ways of declaring types without an actual implementation.
+          vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
+          -- Jump to the definition of the word under your cursor.
+          -- This is where a variable was first declared, or where a function is defined, etc.
+          -- To jump back, press <C-t>.
+          vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+          -- Fuzzy find all the symbols in your current document.
+          -- Symbols are things like variables, functions, types, etc.
+          vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
+          -- Fuzzy find all the symbols in your current workspace.
+          -- Similar to document symbols, except searches over your entire project.
+          vim.keymap.set(
+            'n',
+            'gW',
+            builtin.lsp_dynamic_workspace_symbols,
+            { buffer = buf, desc = 'Open Workspace Symbols' }
+          )
+          -- Jump to the type of the word under your cursor.
+          -- Useful when you're not sure what type a variable is and you want to see
+          -- the definition of its *type*, not where it was *defined*.
+          vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
         end,
-        { desc = '[/] Fuzzily search in current buffer' }
-      )
+      })
+      -- Override default behavior and theme when searching
+      vim.keymap.set('n', '<leader>/', function()
+        -- You can pass additional configuration to Telescope to change the theme, layout, etc.
+        builtin.current_buffer_fuzzy_find(
+          require('telescope.themes').get_dropdown({ winblend = 10, previewer = false })
+        )
+      end, { desc = '[/] Fuzzily search in current buffer' })
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      vim.keymap.set('n', '<leader>s/',
-        function()
-          builtin.live_grep({ grep_open_files = true, prompt_title = 'Live Grep in Open Files', })
-        end,
-        { desc = '[S]earch [/] in Open Files' })
+      vim.keymap.set('n', '<leader>s/', function()
+        builtin.live_grep({ grep_open_files = true, prompt_title = 'Live Grep in Open Files' })
+      end, { desc = '[S]earch [/] in Open Files' })
 
       -- Shortcut for searching your Neovim configuration files
-      vim.keymap.set('n', '<leader>sn',
-        function()
-          builtin.find_files({ cwd = vim.fn.stdpath 'config' })
-        end,
-        { desc = '[S]earch [N]eovim files' })
+      vim.keymap.set('n', '<leader>sn', function()
+        builtin.find_files({ cwd = vim.fn.stdpath('config') })
+      end, { desc = '[S]earch [N]eovim files' })
     end,
   },
 }
