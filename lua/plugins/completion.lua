@@ -10,7 +10,7 @@ return {
       menu = { draw = { columns = { { 'label', 'label_description', gap = 1 }, { 'kind' }, { 'source_name' } } } },
     },
     cmdline = {
-      completion = { list = { selection = { preselect = true, auto_insert = false } }, menu = { auto_show = true } },
+      completion = { list = { selection = { preselect = false, auto_insert = true } }, menu = { auto_show = true } },
     },
     sources = {
       default = {
