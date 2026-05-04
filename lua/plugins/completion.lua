@@ -21,10 +21,4 @@ return {
       },
     },
   },
-  config = function(_, opts)
-    local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
-    vim.lsp.config('*', { capabilities = capabilities })
-
-    require('blink.cmp').setup(opts)
-  end,
 }
