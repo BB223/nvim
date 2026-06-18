@@ -69,5 +69,6 @@ M.configurations = {
 }
 
 M.configurations.c = M.configurations.cpp
+M.configurations.rust = M.configurations.cpp
 
 return M
