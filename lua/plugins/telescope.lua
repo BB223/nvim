@@ -12,7 +12,7 @@ return {
         end,
       },
       'nvim-telescope/telescope-ui-select.nvim',
-      'nvim-tree/nvim-web-devicons'
+      'nvim-tree/nvim-web-devicons',
     },
     keys = {
       {
@@ -24,12 +24,20 @@ return {
         desc = '[S]earch [H]elp',
       },
       {
-        '<leader>sf',
+        '<leader>sF',
         function()
           require('telescope.builtin').find_files()
         end,
         mode = 'n',
         desc = '[S]earch [F]iles',
+      },
+      {
+        '<leader>sf',
+        function()
+          require('telescope.builtin').git_files()
+        end,
+        mode = 'n',
+        desc = '[S]earch Git [f]iles',
       },
       {
         '<leader>ss',

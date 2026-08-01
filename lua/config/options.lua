@@ -78,3 +78,5 @@ vim.g.loaded_node_provider = 0
 
 vim.api.nvim_create_user_command('LspInfo', 'checkhealth vim.lsp', {})
 vim.api.nvim_create_user_command('LspLog', 'tabedit ' .. vim.lsp.log.get_filename(), {})
+
+vim.o.exrc = true
