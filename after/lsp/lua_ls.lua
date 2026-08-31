@@ -1,6 +1,8 @@
 ---@type vim.lsp.Config
 return {
   on_init = function(client)
+    client.server_capabilities.documentFormattingProvider = false
+
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
       if
@@ -11,7 +13,8 @@ return {
       end
     end
 
-    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+    local current_settings = client.config.settings --[[@as lspconfig.settings.lua_ls]]
+    client.config.settings.Lua = vim.tbl_deep_extend('force', current_settings.Lua, {
       runtime = {
         version = 'LuaJIT',
         path = { 'lua/?.lua', 'lua/?/init.lua' },
@@ -32,6 +35,8 @@ return {
   end,
   ---@type lspconfig.settings.lua_ls
   settings = {
-    Lua = {},
+    Lua = {
+      format = { enable = false },
+    },
   },
 }

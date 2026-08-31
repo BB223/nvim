@@ -120,8 +120,8 @@ return {
     },
     config = function(_, opts)
       require('telescope').setup(opts)
-      require('telescope').load_extension('fzf')
-      require('telescope').load_extension('ui-select')
+      pcall(require('telescope').load_extension('fzf'))
+      pcall(require('telescope').load_extension('ui-select'))
 
       local builtin = require('telescope.builtin')
       vim.api.nvim_create_autocmd('LspAttach', {
