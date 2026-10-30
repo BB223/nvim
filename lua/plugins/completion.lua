@@ -7,19 +7,36 @@ return {
   opts = {
     completion = {
       documentation = { auto_show = true },
-      list = { selection = { preselect = true, auto_insert = false } },
-      menu = { draw = { columns = { { 'label', 'label_description', gap = 1 }, { 'kind' }, { 'source_name' } } } },
-    },
-    cmdline = {
-      completion = { list = { selection = { preselect = false, auto_insert = true } }, menu = { auto_show = true } },
-    },
-    sources = {
-      default = {
-        'lsp',
-        'buffer',
-        'snippets',
-        'path',
+      list = {
+        selection = {
+          preselect = true,
+          auto_insert = false,
+        },
+      },
+      menu = {
+        draw = {
+          columns = {
+            { 'label', 'label_description', gap = 1 },
+            { 'kind' },
+            { 'source_name' },
+          },
+        },
       },
     },
+    cmdline = {
+      completion = {
+        list = {
+          selection = {
+            preselect = false,
+            auto_insert = true,
+          },
+        },
+        menu = { auto_show = true },
+      },
+    },
+    sources = {
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
+    },
   },
+  opts_extend = { 'sources.default' },
 }

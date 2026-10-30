@@ -25,7 +25,7 @@ return {
 
       -- vim.lsp.enable('gdscript')
       -- vim.lsp.enable('gdshader_lsp')
-      vim.lsp.enable('roslyn_ls')
+      -- vim.lsp.enable('roslyn_ls')
     end,
   },
   {
@@ -36,7 +36,11 @@ return {
     ---@type MasonSettings
     ---@diagnostic disable-next-line: missing-fields
     opts = {
+      registry_cache = {
+        refresh = false,
+      },
       ui = {
+        check_outdated_packages_on_open = false,
         icons = {
           package_installed = '✓',
           package_pending = '➜',
